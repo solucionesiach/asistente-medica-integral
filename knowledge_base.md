@@ -1,11 +1,11 @@
-# Base de Conocimiento — Centro Médico MédicaIntegral
+# Base de Conocimiento — Centro Médico DoctorIA
 **Versión:** 1.0 (Actualizado: Octubre 2026)
 
 ---
 
 ## 1. Información General y Horarios de Atención
-* **Dirección:** Av. Córdoba 1450, CABA, Argentina.
-* **Horarios de atención presencial:** Lunes a Viernes de 08:00 a 20:00 hs. Sábados de 08:00 a 13:00 hs.
+* **Dirección:** Av. Calixto Calderón, Chivilcoy, Argentina.
+* **Horarios de atención presencial:** Lunes a Viernes de 08:00 a 17:00 hs. Sábados de 08:00 a 12:00 hs.
 * **Especialidades disponibles:**
   * Medicina General / Clínica Médica
   * Pediatría
