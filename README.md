@@ -1,8 +1,8 @@
-# Arquitectura de Agente Conversacional Inteligente (MédicaIntegral)
+# Arquitectura de Agente Conversacional Inteligente (DoctorIA)
 > Trabajo Final Integrador — Diplomatura en IA Aplicada a Entornos Digitales de Gestión (FCE-UBA · Cohorte 2026)
 
 ## 📌 Descripción del Proyecto
-Este proyecto presenta la arquitectura y diseño de un asistente conversacional basado en Inteligencia Artificial Generativa para la gestión de consultas iniciales, cualificación de pacientes y asistencia en la reserva de turnos en el **Centro Médico MédicaIntegral**.
+Este proyecto presenta la arquitectura y diseño de un asistente conversacional basado en Inteligencia Artificial Generativa para la gestión de consultas iniciales, cualificación de pacientes y asistencia en la reserva de turnos en el **Centro Médico DoctorIA**.
 
 El objetivo es reemplazar los sistemas tradicionales de respuesta automática basados en árboles de decisión rígidos por un agente capaz de comprender lenguaje coloquial, operar dentro de una base de conocimiento delimitada y derivar casos urgentes de forma supervisada.
 
