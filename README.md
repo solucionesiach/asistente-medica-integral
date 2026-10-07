@@ -1,4 +1,4 @@
-# 🏥 DoctorIA — Sistema Agente Conversacional e Integración Asíncrona
+Markdown# 🏥 DoctorIA — Sistema Agente Conversacional e Integración Asíncrona
 
 **DoctorIA** es una solución de atención médica automatizada orientada a optimizar la interacción entre pacientes y el centro médico. Diseñado como un **Agente de IA Autónomo**, reemplaza los esquemas rígidos de respuesta por menúes (IVR) mediante comprensión semántica del lenguaje natural, ingeniería de contexto controlada, cualificación activa de solicitudes y gestión supervisada de urgencias.
 
@@ -28,3 +28,11 @@ El sistema se encuentra orquestado sobre la plataforma **n8n**, articulando mode
         ├── Tool: Google Calendar (Agendamiento)
         ├── Tool: Google Sheets (Persistencia de Turnos)
         └── Tool: Gmail (Alerta Inmediata a Secretaría)
+2. Flujo Asíncrono de Recordatorios (Procesamiento Programado)Plaintext[Schedule Trigger (Cron Diario)]
+        ↓
+[Google Sheets - Consulta de Turnos]
+        ↓
+[Filter Node (Filtro: Fecha del Turno = Día Posterior)]
+        ↓
+[WhatsApp Cloud API / Canal de Mensajería (Notificación Saliente)]
+📋 Estructura de Persistencia (Base de Datos)Fecha RegistroNombre CompletoDNITeléfonoCobertura/PrepagaMotivo ConsultaFecha del TurnoHora del TurnoYYYY-MM-DDTextoTextoTextoTextoTextoYYYY-MM-DDHH:MM⚙️ Directivas del Sistema (System Message)El comportamiento de la asistente virtual (Sofía) se encuentra enmarcado por reglas operativas rigurosas:Límites de Actuación: Prohibición estricta de emitir diagnósticos médicos, recetar medicamentos o interpretar estudios clínicos.Secuencia de Cualificación: Cumplimiento ordenado de captura de datos indispensables.Derivación de Emergencia: Invocación transparente de herramientas de notificación ante eventos críticos.📂 Repositorio de Entregables/workflows/DoctorIA_n8n_workflow.json: Exportación del flujo estructurado en n8n./docs/Informe_Tecnico_DoctorIA.pdf: Documentación del proyecto (Relevamiento, Base de Conocimiento, Arquitectura y Pruebas).
