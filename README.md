@@ -1,30 +1,30 @@
-# 🏥 DoctorIA - Agente Conversacional e Integración Asíncrona (Nivel 3)
+# 🏥 DoctorIA — Sistema Agente Conversacional e Integración Asíncrona
 
-**DoctorIA** es una solución avanzada de atención médica automatizada que reemplaza los tradicionales IVR y sistemas de árbol de decisión rígidos por un **Agente de IA Autónomo**. El sistema posee comprensión semántica de lenguaje natural, memoria conversacional, cualificación activa de turnos, gestión inmediata de urgencias y un subsistema de recordatorios asíncronos[cite: 6, 7].
+**DoctorIA** es una solución de atención médica automatizada orientada a optimizar la interacción entre pacientes y el centro médico. Diseñado como un **Agente de IA Autónomo**, reemplaza los esquemas rígidos de respuesta por menúes (IVR) mediante comprensión semántica del lenguaje natural, ingeniería de contexto controlada, cualificación activa de solicitudes y gestión supervisada de urgencias.
 
 ---
 
-## 🚀 Características Principales
+## 🚀 Capacidades y Valor Operativo
 
-* **Comprensión Semántica y Contexto Controlado:** Procesa expresiones coloquiales, modismos y consultas complejas manteniendo respuestas precisas basadas en una Base de Conocimiento oficial (tarifas, horarios, coberturas).
-* **Cualificación Activa de Pacientes:** Filtra y solicita datos obligatorios (`Nombre Completo`, `DNI`, `Teléfono`, `Cobertura/Prepaga`, `Motivo de Consulta`, `Fecha` y `Hora del Turno`) antes de efectuar cualquier reserva o registro.
-* **Protocolo de Urgencias Médicas:** Identificación automática de situaciones críticas (dolores agudos, sangrado, etc.). Interrumpe la atención automatizada, brinda instrucciones inmediatas de seguridad (SAME 107) y dispara una alerta por **Gmail** en tiempo real a la secretaría del centro médico.
+* **Comprensión Semántica y Contexto Controlado:** Interpreta consultas complejas, modismos y múltiples intenciones en lenguaje natural, operando bajo una Base de Conocimiento oficial (tarifas, horarios, coberturas) que evita alucinaciones o respuestas fuera de alcance.
+* **Cualificación Activa de Pacientes:** Evalúa y recopila secuencialmente la información requerida (`Nombre Completo`, `DNI`, `Teléfono de Contacto`, `Cobertura/Prepaga`, `Motivo de Consulta`, `Fecha` y `Hora del Turno`) antes de ejecutar cualquier registro o reserva.
+* **Protocolo de Urgencias Médicas:** Identifica de forma automática indicadores o palabras clave de severidad clínica. Interrumpe el flujo automático para emitir instrucciones inmediatas de seguridad (SAME - 107) y dispara una alerta por correo electrónico a la secretaría del centro médico.
 * **Persistencia de Datos (CRM) y Agendamiento:**
-  * Sincronización automática de citas en **Google Calendar**[cite: 7].
-  * Registro centralizado e histórico de leads/pacientes en **Google Sheets**[cite: 7].
-* **Subsistema de Recordatorios Asíncronos (Cron 24hs):** Automatización diaria que consulta la base de datos, filtra las citas del día posterior y dispara notificaciones salientes de recordatorio al canal de mensajería del paciente[cite: 6, 7].
+  * Reserva y sincronización directa de eventos en **Google Calendar**.
+  * Registro centralizado de pacientes y turnos en **Google Sheets** para auditoría y seguimiento administrativo.
+* **Subsistema de Recordatorios Asíncronos:** Flujo automatizado de ejecución diaria que consulta la base de datos, identifica las citas programadas para las 24 horas posteriores y emite notificaciones salientes de recordatorio al contacto del paciente.
 
 ---
 
-## 🛠️ Arquitectura Técnica del Sistema
+## 🛠️ Arquitectura Técnica de la Solución
 
-El proyecto está construido sobre **n8n** conectando modelos de LLM con herramientas externas (*Tools*)[cite: 7]:
+El sistema se encuentra orquestado sobre la plataforma **n8n**, articulando modelos de lenguaje (LLM) con herramientas de procesamiento y persistencia:
 
-### 1. Flujo Conversacional Principal (Atención en Tiempo Real)
+### 1. Flujo Conversacional Principal (Atención e Interacción)
 ```text
 [Chat Trigger / Mensajería] 
         ↓
-    [AI Agent] ← (Google Gemini + Simple Memory)
+    [AI Agent] ← (Google Gemini + Memory)
         ├── Tool: Google Calendar (Agendamiento)
-        ├── Tool: Google Sheets (Persistencia CRM)
-        └── Tool: Gmail (Alerta Urgencias a Secretaría)
+        ├── Tool: Google Sheets (Persistencia de Turnos)
+        └── Tool: Gmail (Alerta Inmediata a Secretaría)
