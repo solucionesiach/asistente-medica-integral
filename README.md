@@ -1,47 +1,30 @@
-# DoctorIA — Asistente Conversacional Inteligente
-> Trabajo Final Integrador — Diplomatura en IA Aplicada a Entornos Digitales de Gestión (FCE-UBA · Cohorte 2026)
+# 🏥 DoctorIA - Agente Conversacional e Integración Asíncrona (Nivel 3)
 
-## 📌 Descripción del Proyecto
-Este proyecto presenta la arquitectura y diseño de un asistente conversacional basado en Inteligencia Artificial Generativa para la gestión de consultas iniciales, cualificación de pacientes y asistencia en la reserva de turnos en el centro médico bajo la marca **DoctorIA**.
-
-El objetivo es reemplazar los sistemas tradicionales de respuesta automática basados en árboles de decisión rígidos por un agente capaz de comprender lenguaje coloquial, operar dentro de una base de conocimiento delimitada y derivar casos urgentes de forma supervisada.
+**DoctorIA** es una solución avanzada de atención médica automatizada que reemplaza los tradicionales IVR y sistemas de árbol de decisión rígidos por un **Agente de IA Autónomo**. El sistema posee comprensión semántica de lenguaje natural, memoria conversacional, cualificación activa de turnos, gestión inmediata de urgencias y un subsistema de recordatorios asíncronos[cite: 6, 7].
 
 ---
 
-## 🛠️ Estructura del Repositorio
-* `README.md`: Descripción general del proyecto e instrucciones.
-* `knowledge_base.md`: Base de conocimiento estructurada (tarifas, horarios, especialidades y políticas).
-* `system_prompt.txt`: Instrucciones maestras, flujo de cualificación activa y reglas del agente.
+## 🚀 Características Principales
+
+* **Comprensión Semántica y Contexto Controlado:** Procesa expresiones coloquiales, modismos y consultas complejas manteniendo respuestas precisas basadas en una Base de Conocimiento oficial (tarifas, horarios, coberturas).
+* **Cualificación Activa de Pacientes:** Filtra y solicita datos obligatorios (`Nombre Completo`, `DNI`, `Teléfono`, `Cobertura/Prepaga`, `Motivo de Consulta`, `Fecha` y `Hora del Turno`) antes de efectuar cualquier reserva o registro.
+* **Protocolo de Urgencias Médicas:** Identificación automática de situaciones críticas (dolores agudos, sangrado, etc.). Interrumpe la atención automatizada, brinda instrucciones inmediatas de seguridad (SAME 107) y dispara una alerta por **Gmail** en tiempo real a la secretaría del centro médico.
+* **Persistencia de Datos (CRM) y Agendamiento:**
+  * Sincronización automática de citas en **Google Calendar**[cite: 7].
+  * Registro centralizado e histórico de leads/pacientes en **Google Sheets**[cite: 7].
+* **Subsistema de Recordatorios Asíncronos (Cron 24hs):** Automatización diaria que consulta la base de datos, filtra las citas del día posterior y dispara notificaciones salientes de recordatorio al canal de mensajería del paciente[cite: 6, 7].
 
 ---
 
-## 🚀 Herramientas Utilizadas
-* **Motor de IA / LLM:** Google AI Studio / Gemini / ChatGPT.
-* **Orquestación y Automatización:** n8n.
-* **Gestión de Conocimiento:** Markdown estructurado (RAG / Context Window).
-* **Repositorio y Control de Versiones:** GitHub.
+## 🛠️ Arquitectura Técnica del Sistema
 
----
+El proyecto está construido sobre **n8n** conectando modelos de LLM con herramientas externas (*Tools*)[cite: 7]:
 
-## 📋 Funcionalidades Clave
-1. **Comprensión semántica:** Procesa lenguaje coloquial y consultas complejas.
-2. **Contexto controlado:** Responde únicamente con información verificada para evitar alucinaciones.
-3. **Cualificación activa:** Recopila datos obligatorios (Nombre, DNI, Cobertura, Motivo) antes de direccionar a la reserva de turnos.
-4. **Trigger de seguridad (Urgencias):** Detecta síntomas graves y deriva inmediatamente a la guardia médica o emergencias (SAME 107).
-
----
-
-## 🔄 Arquitectura del Flujo de Automatización (n8n / Make)
-
-El agente **DoctorIA** opera integrado mediante un flujo de automatización no-code en **n8n**:
-
-```mermaid
-graph TD
-    A[Mensaje de WhatsApp / Web] --> B[Webhook Entrante en n8n]
-    B --> C[Agente IA - LLM OpenAI/Gemini]
-    C -->|Lee Contexto| D[knowledge_base.md & system_prompt.txt]
-    C --> E{¿Es Urgencia Médica?}
-    E -->|Sí| F[Trigger de Seguridad: Alerta a Recepción / SAME 107]
-    E -->|No| G{¿Cualificación Completa?}
-    G -->|Incompleta| H[Pedir datos faltantes al paciente]
-    G -->|Completa| I[Agendar en Google Calendar / CRM + Confirmación]
+### 1. Flujo Conversacional Principal (Atención en Tiempo Real)
+```text
+[Chat Trigger / Mensajería] 
+        ↓
+    [AI Agent] ← (Google Gemini + Simple Memory)
+        ├── Tool: Google Calendar (Agendamiento)
+        ├── Tool: Google Sheets (Persistencia CRM)
+        └── Tool: Gmail (Alerta Urgencias a Secretaría)
