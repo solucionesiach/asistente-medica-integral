@@ -21,18 +21,40 @@
 El sistema se encuentra orquestado sobre la plataforma **n8n**, articulando modelos de lenguaje (LLM) con herramientas de procesamiento y persistencia:
 
 ### 1. Flujo Conversacional Principal (Atención e Interacción)
-```text
-[Chat Trigger / Mensajería] 
-        ↓
-    [AI Agent] ← (Google Gemini + Memory)
-        ├── Tool: Google Calendar (Agendamiento)
-        ├── Tool: Google Sheets (Persistencia de Turnos)
-        └── Tool: Gmail (Alerta Inmediata a Secretaría)
-2. Flujo Asíncrono de Recordatorios (Procesamiento Programado)Plaintext[Schedule Trigger (Cron Diario)]
-        ↓
-[Google Sheets - Consulta de Turnos]
-        ↓
-[Filter Node (Filtro: Fecha del Turno = Día Posterior)]
-        ↓
-[WhatsApp Cloud API / Canal de Mensajería (Notificación Saliente)]
-📋 Estructura de Persistencia (Base de Datos)Fecha RegistroNombre CompletoDNITeléfonoCobertura/PrepagaMotivo ConsultaFecha del TurnoHora del TurnoYYYY-MM-DDTextoTextoTextoTextoTextoYYYY-MM-DDHH:MM⚙️ Directivas del Sistema (System Message)El comportamiento de la asistente virtual (Sofía) se encuentra enmarcado por reglas operativas rigurosas:Límites de Actuación: Prohibición estricta de emitir diagnósticos médicos, recetar medicamentos o interpretar estudios clínicos.Secuencia de Cualificación: Cumplimiento ordenado de captura de datos indispensables.Derivación de Emergencia: Invocación transparente de herramientas de notificación ante eventos críticos.📂 Repositorio de Entregables/workflows/DoctorIA_n8n_workflow.json: Exportación del flujo estructurado en n8n./docs/Informe_Tecnico_DoctorIA.pdf: Documentación del proyecto (Relevamiento, Base de Conocimiento, Arquitectura y Pruebas).
+
+- **[Chat Trigger / Mensajería]**
+  - └── **[AI Agent]** (Google Gemini + Memory)
+      - ├── **Tool:** Google Calendar (Agendamiento)
+      - ├── **Tool:** Google Sheets (Persistencia de Turnos)
+      - └── **Tool:** Gmail (Alerta Inmediata a Secretaría)
+
+### 2. Flujo Asíncrono de Recordatorios (Procesamiento Programado)
+
+- **[Schedule Trigger (Cron Diario)]**
+  - └── **[Google Sheets - Consulta de Turnos]**
+      - └── **[Filter Node (Filtro: Fecha del Turno = Día Posterior)]**
+          - └── **[WhatsApp Cloud API / Canal de Mensajería (Notificación Saliente)]**
+
+---
+
+## 📋 Estructura de Persistencia (Base de Datos)
+
+| Fecha Registro | Nombre Completo | DNI | Teléfono | Cobertura/Prepaga | Motivo Consulta | Fecha del Turno | Hora del Turno |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| *YYYY-MM-DD* | *Texto* | *Texto* | *Texto* | *Texto* | *Texto* | *YYYY-MM-DD* | *HH:MM* |
+
+---
+
+## ⚙️ Directivas del Sistema (System Message)
+
+El comportamiento de la asistente virtual (**Sofía**) se encuentra enmarcado por reglas operativas rigurosas:
+1. **Límites de Actuación:** Prohibición estricta de emitir diagnósticos médicos, recetar medicamentos o interpretar estudios clínicos.
+2. **Secuencia de Cualificación:** Cumplimiento ordenado de captura de datos indispensables.
+3. **Derivación de Emergencia:** Invocación transparente de herramientas de notificación ante eventos críticos.
+
+---
+
+## 📂 Repositorio de Entregables
+
+* `/workflows/DoctorIA_n8n_workflow.json`: Exportación del flujo estructurado en n8n.
+* `/docs/Informe_Tecnico_DoctorIA.pdf`: Documentación del proyecto (Relevamiento, Base de Conocimiento, Arquitectura y Pruebas).
