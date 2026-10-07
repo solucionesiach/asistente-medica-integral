@@ -1,0 +1,333 @@
+{
+  "name": "DoctorIA WorkFlow",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "05453fff-2150-493b-adcf-990b4274dfc1",
+      "name": "When chat message received",
+      "webhookId": "fd9f036e-bdd7-4e15-88cf-366444b0dd7e"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "ROL Y OBJETIVO:\nEres \"Sofía\", la asistente virtual del Centro Médico DoctorIA. Tu objetivo es atender consultas frecuentes, brindar información sobre horarios y tarifas, cualificar a los pacientes y guiarlos en el proceso de reserva de turnos de forma ágil, empática y clara.\n\nBASE DE CONOCIMIENTO (CONTEXTO CONTROLADO):\n- Horarios: Lunes a Viernes de 08:00 a 17:00 hs. Sábados de 08:00 a 12:00 hs.\n- Dirección: Av. Calixto Calderón, Chivilcoy, Argentina.\n- Prepagas/Obras Sociales: OSDE, Swiss Medical, Galeno y OSECAC (cobertura al 100% sujeto a plan).\n- Aranceles particulares: Medicina General/Pediatría $25.000 | Traumatología/Dermatología $30.000 | Odontología $28.000.\n- Requisitos para turnos: Nombre completo, DNI, Cobertura médica, Motivo breve de consulta, y Fecha y Hora deseada para el turno.\n\nREGLAS DE COMPORTAMIENTO Y TONO:\n1. Sé profesional, empática, clara y accesible.\n2. Saluda e identifícate como la asistente virtual de DoctorIA.\n3. NO des diagnósticos, NO recetes medicamentos ni interpretes estudios clínicos bajo ninguna circunstancia.\n\nFLUJO DE CUALIFICACIÓN ACTIVA PARA TURNOS:\nAntes de confirmar o pedir la agenda de un turno, solicita en orden los siguientes datos:\n  a. Nombre completo\n  b. DNI\n  c. Teléfono de contacto (con código de área).\n  d. Especialidad requerida.\n  e. Obra social / Prepaga (con nº de afiliado) o Particular.\n  f. Motivo breve de la consulta.\n  g. Fecha y Hora deseada para la atención (dentro del horario de atención).\n\nTRIGGER DE DERIVACIÓN URGENTE:\nSi el usuario menciona síntomas de gravedad (ej. dolor de pecho, falta de aire, sangrado grave, pérdida de conocimiento, fiebre muy alta):\n1. INTERRUMPE INMEDIATAMENTE la atención automática y responde:\n\"⚠️ ATENCIÓN: Si estás experimentando una emergencia médica, por favor dirígete inmediatamente a la guardia médica más cercana o comunícate con el servicio de emergencias (SAME - 107). Esta línea automática no procesa emergencias de salud.\"\n2. Ejecuta la herramienta de Gmail para enviar una alerta a la secretaría indicando el mensaje recibido del paciente y la hora."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "3ebb0829-1a39-49e7-be71-a30335217ff8",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        96,
+        208
+      ],
+      "id": "40345d02-9c9d-4f69-9157-f9406a14f462",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": null,
+          "name": "",
+          "__aiGatewayManaged": true
+        }
+      }
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "soluciones.iach@gmail.com",
+          "mode": "list",
+          "cachedResultName": "soluciones.iach@gmail.com"
+        },
+        "additionalFields": {
+          "summary": "Turno Médico: DoctorIA - [Nombre Paciente]"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        544,
+        208
+      ],
+      "id": "490bc896-1e80-4378-acd7-16904055b5d9",
+      "name": "Create an event in Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "SBVSbMeebs2jikwL",
+          "name": "Google Calendar account 2"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        240,
+        208
+      ],
+      "id": "2de8c017-c744-4572-8cae-6b5ecdfda1c7",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "sendTo": "soluciones.iach@gmail.com",
+        "subject": "🚨 ALERTA URGENCIA: Intento de consulta crítica en DoctorIA",
+        "message": "Atención Secretaría: Se ha detectado una consulta de urgencia médica en el chatbot de DoctorIA. Por favor revisar el sistema.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        384,
+        208
+      ],
+      "id": "9804e518-0bca-400e-a811-c9459b70e1dc",
+      "name": "Send a message in Gmail",
+      "webhookId": "a41af8bc-0de3-43c3-90d0-f932c175e997",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "7QH4lT99tsqfowNh",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1cTyrXu_MW8lUOFtXsW3Usab2QGddPTNZBcooR8yhdMs",
+          "mode": "list",
+          "cachedResultName": "DoctorIA - Registro de Pacientes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1cTyrXu_MW8lUOFtXsW3Usab2QGddPTNZBcooR8yhdMs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1cTyrXu_MW8lUOFtXsW3Usab2QGddPTNZBcooR8yhdMs/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        704,
+        208
+      ],
+      "id": "a32cf989-93b2-4e35-9b3c-31f6ac9d6aa5",
+      "name": "Get row(s) in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "km5vguS5wya29bt1",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        816,
+        32
+      ],
+      "id": "64fa7ae7-e076-4612-9864-716c38cb622f",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1cTyrXu_MW8lUOFtXsW3Usab2QGddPTNZBcooR8yhdMs",
+          "mode": "list",
+          "cachedResultName": "DoctorIA - Registro de Pacientes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1cTyrXu_MW8lUOFtXsW3Usab2QGddPTNZBcooR8yhdMs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1cTyrXu_MW8lUOFtXsW3Usab2QGddPTNZBcooR8yhdMs/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Fecha del turno",
+              "lookupValue": "={{ $today.plus({ days: 1 }).toFormat('yyyy-MM-dd') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        960,
+        32
+      ],
+      "id": "babb6709-50fa-401c-a58c-6456e73b9f2e",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "km5vguS5wya29bt1",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "message": "=Hola {{ $json['Nombre Completo'] }}, te recordamos que mañana {{ $json['Fecha del Turno'] }} a las {{ $json['Hora del Turno'] }} hs tienes tu turno agendado en Centro Médico DoctorIA para la especialidad de {{ $json['Motivo Consulta'] }}. Si necesitas reprogramar o cancelar, por favor avísanos por este mismo chat.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        1184,
+        32
+      ],
+      "id": "a45e815c-9866-4078-9472-bd2c88ee30aa",
+      "name": "Send message and wait for response",
+      "webhookId": "0384bfbc-bb0e-46a0-9ba5-def67ef04bd3"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an event in Google Calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    },
+    "Send a message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send message and wait for response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "021989d2-5181-424c-8d76-5026feb42ee4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0bd5e6c567f7dd77b32678dcae961e514f9c200beaba3fa0fec8eb6f6337115e"
+  },
+  "nodeGroups": [],
+  "id": "Y6Mq0CdZFSsRgSuR",
+  "tags": []
+}
