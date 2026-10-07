@@ -1,47 +1,65 @@
-# Base de Conocimiento — Centro Médico DoctorIA
-**Versión:** 1.0 (Actualizado: Octubre 2026)
+# 📚 Base de Conocimiento — Centro Médico DoctorIA
+
+*Última actualización: Octubre 2026*  
+*Versión del documento: 3.0 (Nivel Producción)*  
+
+Este documento constituye la fuente central de información utilizada por el Agente de IA (**Sofía**) para la atención de consultas, cualificación de turnos y gestión de urgencias.
 
 ---
 
-## 1. Información General y Horarios de Atención
-* **Dirección:** Av. Calixto Calderón, Chivilcoy, Argentina.
-* **Horarios de atención presencial:** Lunes a Viernes de 08:00 a 17:00 hs. Sábados de 08:00 a 12:00 hs.
-* **Especialidades disponibles:**
-  * Medicina General / Clínica Médica
-  * Pediatría
-  * Traumatología
-  * Dermatología
-  * Odontología General
+## 1. Información Institucional
+
+* **Nombre de la Institución:** Centro Médico DoctorIA
+* **Dirección:** Av. Calixto Calderón, Chivilcoy, Provincia de Buenos Aires, Argentina
+* **Horarios de Atención:**
+  * Lunes a Viernes: 08:00 a 17:00 hs.
+  * Sábados: 08:00 a 12:00 hs.
+  * Domingos y Feriados: Cerrado.
 
 ---
 
-## 2. Cuadro Tarifario y Obras Sociales / Prepagas
-* **Obras Sociales / Prepagas con convenio:** OSDE, Swiss Medical, Galeno y OSECAC (cobertura al 100% sujeto a copago según plan).
-* **Atención Particular (Sin cobertura / Consulta privada):**
-  * Consulta Medicina General / Pediatría: $25.000
-  * Consulta Traumatología / Dermatología: $30.000
-  * Consulta Odontología General: $28.000
-* **Métodos de pago aceptados:** Efectivo, transferencia bancaria, tarjetas de débito y crédito.
+## 2. Especialidades y Aranceles Particulares
+
+* **Medicina General / Pediatría:** $25.000
+* **Traumatología / Dermatología:** $30.000
+* **Odontología:** $28.000
 
 ---
 
-## 3. Políticas de Reserva de Turnos y Cualificación Previa
-* **Requisitos obligatorios para agendar turno:**
-  1. Nombre completo y DNI.
-  2. Número de teléfono y correo electrónico.
-  3. Cobertura médica (Obra Social / Prepaga y número de afiliado, o si es Particular).
-  4. Motivo breve de la consulta.
-* **Política de Cancelación / Reprogramación:**
-  * Debe solicitarse con al menos 24 horas de anticipación.
-  * En caso de inasistencia sin aviso previo, se deberá abonar el 50% de la consulta en la siguiente visita.
+## 3. Coberturas Médicas y Obras Sociales
+
+* **Prepagas / Obras Sociales con Convenio:** OSDE, Swiss Medical, Galeno y OSECAC.
+* **Condición de Cobertura:** Cobertura al 100% (sujeto a plan y presentación de credencial activa / nº de afiliado).
+* **Atención Particular:** Disponible para pacientes sin convenio mediante pago de arancel correspondiente.
 
 ---
 
-## 4. Fuera de Alcance y Triggers de Derivación Urgente
-* **Lo que la IA NO DEBE responder ni hacer:**
-  * NO dar diagnósticos ni prescribir medicamentos o tratamientos.
-  * NO interpretar estudios médicos (análisis de sangre, radiografías, etc.).
-  * NO negociar valores de consultas ni ofrecer descuentos.
-* **Situaciones de Emergencia / Urgencias Médicas (Pase Inmediato a Humano / Guardia):**
-  * Palabras clave o síntomas: "dolor de pecho", "dificultad para respirar", "pérdida de conocimiento", "sangrado abundante", "accidente grave", "fiebre mayor a 40°", "convulsiones".
-  * **Acción obligatoria:** Interrumpir la gestión automática e indicar de inmediato al usuario que se dirija a la guardia médica más cercana o llame al servicio de emergencias (SAME 107).
+## 4. Requisitos Obligatorios para la Reserva de Turnos
+
+Para efectuar la cualificación activa y completar el agendamiento (en **Google Calendar** y **Google Sheets**), el sistema exige recopilar obligatoriamente los siguientes 5 datos del paciente:
+
+1. **Nombre Completo**
+2. **DNI**
+3. **Teléfono de Contacto** *(con código de área)*
+4. **Obra Social / Prepaga** *(o condición de Particular)*
+5. **Motivo Breve de Consulta**
+6. **Fecha y Hora Deseada** *(dentro de las franjas de atención)*
+
+---
+
+## 5. Protocolo de Urgencias y Emergencias Médicas
+
+* **Criterio de Activación:** Detección de síntomas críticos o gravedad manifiestos (ej. dolor precordial/de pecho, dificultad respiratoria, sangrado profuso, pérdida de conocimiento, traumatismos graves, fiebre muy alta).
+* **Acción Inmediata (Línea de Respuesta):**
+  > *"⚠️ ATENCIÓN: Si estás experimentando una emergencia médica, por favor dirígete inmediatamente a la guardia médica más cercana o comunícate con el servicio de emergencias (SAME - 107). Esta línea automática no procesa emergencias de salud."*
+* **Acción de Fondo:** Interrupción inmediata del flujo automatizado y disparo de alerta por correo electrónico (**Gmail**) a la secretaría del centro médico.
+
+---
+
+## 6. Fuera de Alcance y Restricciones Operativas
+
+El Agente de IA tiene prohibido de forma estricta:
+* Emitir diagnósticos médicos preliminares o definitivos.
+* Indicar o recetar medicamentos/tratamientos fármaco-terapéuticos.
+* Interpretar estudios clínicos, laboratorio o placas radiográficas.
+* Negociar valores de tarifas o excepciones en convenios de obras sociales.
