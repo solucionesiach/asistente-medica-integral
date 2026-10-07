@@ -1,4 +1,4 @@
-Markdown# 🏥 DoctorIA — Sistema Agente Conversacional e Integración Asíncrona
+# 🏥 DoctorIA — Sistema Agente Conversacional e Integración Asíncrona
 
 **DoctorIA** es una solución de atención médica automatizada orientada a optimizar la interacción entre pacientes y el centro médico. Diseñado como un **Agente de IA Autónomo**, reemplaza los esquemas rígidos de respuesta por menúes (IVR) mediante comprensión semántica del lenguaje natural, ingeniería de contexto controlada, cualificación activa de solicitudes y gestión supervisada de urgencias.
 
